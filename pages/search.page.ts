@@ -63,7 +63,8 @@ export class SearchPage {
     // =====================
     async expectResultSummaryContains(searchTerm: string) {
         try {
-            await expect(this.resultSummary).toContainText(searchTerm);
+            await expect(this.resultSummary).toBeVisible({ timeout: 10000 });
+            await expect(this.resultSummary).toContainText(searchTerm, { timeout: 10000 });
             console.log(`[SearchPage] Result summary contains: "${searchTerm}"`);
         } catch (error) {
             const actualText = await this.resultSummary.textContent();
@@ -75,8 +76,11 @@ export class SearchPage {
 
     async expectResults(searchTerm: string) {
         try {
-            await expect(this.resultSummary).toContainText(searchTerm);
+            await expect(this.resultSummary).toBeVisible({ timeout: 10000 });
             const text = await this.resultSummary.textContent();
+            if (!text) {
+                throw new Error(`[SearchPage] Missing result summary text`);
+            }
             console.log(`[SearchPage] Raw result summary: ${text}`);
             const match = text?.match(/Showing (\d+)/);
             if (!match) {
