@@ -39,7 +39,7 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         baseURL: 'https://www.tmsandbox.co.nz/',
-        headless: false,
+        headless: true,
       },
     },
 

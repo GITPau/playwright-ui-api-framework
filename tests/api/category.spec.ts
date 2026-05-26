@@ -122,16 +122,12 @@ test.describe.serial('Categories API', () => {
     test.describe.serial('Performance Tests', () => {
 
         test('Response time under threshold', async ({ categoriesApi }) => {
-            const start = Date.now();
-            await categoriesApi.getRootCategories();
-            await validateResponseTime(start, 1000);
+            await validateResponseTime(() => categoriesApi.getRootCategories());
         });
 
         test('Repeated calls performance check', async ({ categoriesApi }) => {
             for (let i = 0; i < 5; i++) {
-                const start = Date.now();
-                await categoriesApi.getRootCategories();
-                await validateResponseTime(start, 1000);
+                await validateResponseTime(() => categoriesApi.getRootCategories());
             }
         });
 
